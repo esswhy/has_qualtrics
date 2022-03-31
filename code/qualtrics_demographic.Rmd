@@ -1,0 +1,264 @@
+---
+title: 'HAS: Qualtrics Demographic'
+author: "Shuying Yu"
+date: "3/30/2022"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+#Attach packages
+library(tidyverse)
+library(here)
+library(janitor)
+library(kableExtra)
+library(patchwork)
+```
+
+
+```{r clean_data}
+#Read data and clean variable names
+data <- read_csv(here("data", "HAS_demo_clean.csv")) %>% 
+  clean_names()
+
+#Select certain columns just for review
+data_sub <- data %>% 
+  select(subject_id, sex, reproductive_status, age_scan_years,
+        bmi, self_ses, education_years, verbal_iq,
+        
+        #Women's basic repro health
+        age_at_menarche_years, time_since_last_cycle_years,
+        menopausal_status,
+        
+        #TH and IP qualtrics
+        edinburgh_handedness:stai_trait, lca_total, ltpa_total,
+        
+        #Facename
+        fname_nt, fname_ot, fname_t)
+
+#Remove men from repo
+data_sub_repo <- data_sub %>% 
+  filter(reproductive_status != "Men") %>% 
+  mutate(reproductive_status = fct_relevel(reproductive_status, 
+                                         c("Pre", "Peri", "Post")))
+```
+
+
+# Basic Demographics {.tabset}
+
+## Reproductive Status
+
+
+```{r}
+#Age
+p1 <- ggplot(data = data_sub_repo, aes(y = age_scan_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Age (years)",
+       title = "Age")
+
+
+#BMI
+p2 <- ggplot(data = data_sub_repo, aes(y = bmi,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "BMI",
+       title = "BMI")
+
+
+#Education
+p3 <- ggplot(data = data_sub_repo, aes(y = education_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Education (years)",
+       title = "Education")
+
+
+#Verbal IQ
+p4 <- ggplot(data = data_sub_repo, aes(y = verbal_iq,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Verbal IQ",
+       title = "Verbal IQ")
+
+#Combine
+(p1+p2)/(p3+p4)
+```
+
+
+## Sex
+
+```{r}
+#Age
+p1 <- ggplot(data = data_sub, aes(y = age_scan_years,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Sex",
+       y = "Age (years)",
+       title = "Age")
+
+
+#BMI
+p2 <- ggplot(data = data_sub, aes(y = bmi,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Sex",
+       y = "BMI",
+       title = "BMI")
+
+
+#Education
+p3 <- ggplot(data = data_sub, aes(y = education_years,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Sex",
+       y = "Education (years)",
+       title = "Education")
+
+
+#Verbal IQ
+p4 <- ggplot(data = data_sub, aes(y = verbal_iq,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Sex",
+       y = "Verbal IQ",
+       title = "Verbal IQ")
+
+#Combine
+(p1+p2)/(p3+p4)
+```
+
+
+## Total
+
+```{r}
+#Age
+basic1 <- ggplot(data = data_sub, aes(x = age_scan_years)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Age (years)",
+       y = "Count",
+       title = "Age")
+
+
+#BMI
+basic2 <- ggplot(data = data_sub, aes(x = bmi)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "BMI",
+       y = "Count",
+       title = "BMI")
+
+
+#Education
+basic3 <- ggplot(data = data_sub, aes(x = education_years)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Education (years)",
+       y = "Count",
+       title = "Education")
+
+
+#Verbal IQ
+basic4 <- ggplot(data = data_sub, aes(x = verbal_iq)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Verbal IQ",
+       y = "Count",
+       title = "Verbal IQ")
+
+#Combine
+(basic1 + basic2)/(basic3 + basic4)
+```
+
+
+#  {-}
+
+
+# Reproductive Health Characteristics {.tabset}
+
+## Reproductive Status
+
+```{r}
+#Age at menarche
+p1 <- ggplot(data = data_sub_repo, aes(y = age_at_menarche_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Age (years)",
+       title = "Age at Menarche")
+
+
+#Time since last cycle 
+p2 <- ggplot(data = data_sub_repo, aes(y = time_since_last_cycle_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Time (years)",
+       title = "Time Since Last Menstrual Cycle")
+
+
+#Combine
+(p1+p2)
+```
+
+
+
+## Women Overall
+
+#  {-}
+
+# Take-Home
+
+
+## Edinburgh
+
+## Epworth 
+
+
+# In-Person
+
+
+
+
+
+
