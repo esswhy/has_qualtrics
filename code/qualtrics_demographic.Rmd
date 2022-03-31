@@ -49,6 +49,7 @@ data_sub_repo <- data_sub %>%
   mutate(reproductive_status = fct_relevel(reproductive_status, 
                                          c("Pre", "Peri", "Post")))
 ```
+
 # Introduction
 
 Data of the *cleaned* sample of Healthy Aging Participants, meaning that these are participants that we have decided to include based on complete fMRI scans, no major health problems from demographic survey, and from previous team discussions of who to exclude as we wrapped up recruitment for the study.
@@ -57,6 +58,25 @@ Please refer to hand out for means and standard deviations of the basic demograp
 
 
 # Basic Demographics {.tabset}
+
+Age (years), BMI, highest completed level of education (years), and verbal IQ
+
+**Age:** Ranges from 43-60 years old
+
+**BMI:** Healthy adult BMI levels are about 19-25
+
+**Education:**
+
+- Some College or Associate's = 14 years
+
+- Bachelor's = 16 years
+
+- Master's = 18 years
+
+- Doctoral = 20 years
+
+**Verbal IQ:** Ranges from 74-132 based on AMNART scores
+
 
 ## Reproductive Status
 
@@ -189,7 +209,7 @@ p4 <- ggplot(data = data_sub, aes(y = verbal_iq,
 
 ```{r}
 #Age
-basic1 <- ggplot(data = data_sub, aes(x = age_scan_years)) + 
+p1 <- ggplot(data = data_sub, aes(x = age_scan_years)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "Age (years)",
@@ -198,7 +218,7 @@ basic1 <- ggplot(data = data_sub, aes(x = age_scan_years)) +
 
 
 #BMI
-basic2 <- ggplot(data = data_sub, aes(x = bmi)) + 
+p2 <- ggplot(data = data_sub, aes(x = bmi)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "BMI",
@@ -207,7 +227,7 @@ basic2 <- ggplot(data = data_sub, aes(x = bmi)) +
 
 
 #Education
-basic3 <- ggplot(data = data_sub, aes(x = education_years)) + 
+p3 <- ggplot(data = data_sub, aes(x = education_years)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "Education (years)",
@@ -216,7 +236,7 @@ basic3 <- ggplot(data = data_sub, aes(x = education_years)) +
 
 
 #Verbal IQ
-basic4 <- ggplot(data = data_sub, aes(x = verbal_iq)) + 
+p4 <- ggplot(data = data_sub, aes(x = verbal_iq)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "Verbal IQ",
@@ -224,7 +244,7 @@ basic4 <- ggplot(data = data_sub, aes(x = verbal_iq)) +
        title = "Verbal IQ")
 
 #Combine
-(basic1 + basic2)/(basic3 + basic4)
+(p1 + p2)/(p3 + p4)
 ```
 
 
@@ -397,6 +417,50 @@ p3 <- ggplot(data = data_sub, aes(x = epworth_sleepiness)) +
 
 
 ## Barratt Total
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = barratt_total,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Barratt Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = barratt_total,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Barratt Total",
+       title = "Sex") + 
+  theme(legend.position = "none")
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = barratt_total)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Barratt Total",
+       y = "Count",
+       title = "Total")
+
+#Combine
+(p1+p2)/p3
+```
+
 
 ## Medical Outcomes
 
