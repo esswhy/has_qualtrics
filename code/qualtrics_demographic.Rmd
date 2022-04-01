@@ -25,6 +25,15 @@ library(ggpubr)
 
 
 ```{r clean_data}
+
+########## ALL
+data_all <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
+  clean_names()
+
+
+
+########## CLEAN
+
 #Read data and clean variable names
 data <- read_csv(here("data", "HAS_demo_clean.csv")) %>% 
   clean_names()
@@ -69,7 +78,12 @@ data_sub_repo <- data_sub_repo %>%
 
 Data of the *cleaned* sample of Healthy Aging Participants, meaning that these are participants that we have decided to include based on complete fMRI scans, no major health problems from demographic survey, and from previous team discussions of who to exclude as we wrapped up recruitment for the study.
 
+Subjects ranged from 301-437, scanned over the course of March 1, 2017 to February 10, 2022.
+
+
 Please refer to hand out for means and standard deviations of the basic demographic and neurpsychological batteries. Figures will only include basic demographic and neurpsychiatric batteries.
+
+
 
 
 # Basic Demographics {.tabset}
@@ -1684,15 +1698,165 @@ No differences for either STATE or TRAIT between groups.
 
 <br>
 
-# Face Name {.tabset}
+# Face Name Memory {.tabset}
+
 
 ## Name Learning and Retrieval
 
+Name Learning & Retrieving Composite of:
 
-## Ocupation Learning and Retrieval
+- Initial recall of names (1st and 2nd rounds)
+
+- Cued recall of names after 2 trials
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_nt,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Names Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_nt,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Names Total",
+       title = "Sex") + 
+  theme(legend.position = "none")
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_nt)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Names Total",
+       y = "Count",
+       title = "Total")
+
+#Combine
+(p1+p2)/p3
+```
+
+
+## Occupation Learning and Retrieval
+
+Occupation Learning & Retrieving Composite
+
+- Initial recall of occupations (1st and 2nd rounds)
+
+- Cued recall of occupations after 2 trials
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_ot,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Occupation Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_ot,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Occupation Total",
+       title = "Sex") + 
+  theme(legend.position = "none")
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_ot)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Occupation Total",
+       y = "Count",
+       title = "Total")
+
+#Combine
+(p1+p2)/p3
+```
 
 
 ## Composite Name and Occupation
+
+Composite of Name and Occupation Learning and Recall (Total)
+
+Sum of FNAME-NT and FNAME OT
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_t,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Face Name Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_t,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Face Name Total",
+       title = "Sex") + 
+  theme(legend.position = "none")
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_t)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Face Name Total",
+       y = "Count",
+       title = "Total")
+
+#Combine
+(p1+p2)/p3
+```
+
 
 # {-}
 
