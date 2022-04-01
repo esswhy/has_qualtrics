@@ -325,6 +325,18 @@ p2 <- ggplot(data = data_sub, aes(x = time_since_last_cycle_years)) +
 
 ## Edinburgh Handedness 
 
+Meaures handedness (most are right handed)
+
+-	Score of -1.0		= Pure Left Hander
+
+-	Score of -0.5		= Mixed Left Hander
+
+-	Score of 0.0		= Neutral
+
+-	Score of +0.5		= Mixed Right Hander
+
+-	Score of +1.0		= Pure Right Hander
+
 ```{r}
 #Reproductive status
 p1 <- ggplot(data = data_sub_repo, aes(y = edinburgh_handedness,
@@ -372,6 +384,17 @@ p3 <- ggplot(data = data_sub, aes(x = edinburgh_handedness)) +
 
 ## Epworth Sleepiness
 
+Measures whether participant is abnormally sleepy
+
+-	Score of 0-7 = Unlikely to be abnormally sleepy
+
+-	Score of 8-9 = Average amount of daytime sleepiness
+
+-	Score of 10-15 = May be excessively sleepy depending on situation 
+
+-	Score of 16-24 = Excessively sleepy 
+
+
 ```{r}
 #Reproductive status
 p1 <- ggplot(data = data_sub_repo, aes(y = epworth_sleepiness,
@@ -416,7 +439,11 @@ p3 <- ggplot(data = data_sub, aes(x = epworth_sleepiness)) +
 ```
 
 
-## Barratt Total
+## Barratt
+
+Measures personality and behavior impulsivity. Higher scores indicate more impulsivity.
+
+**Overall/Total**
 
 ```{r}
 #Reproductive status
@@ -461,14 +488,148 @@ p3 <- ggplot(data = data_sub, aes(x = barratt_total)) +
 (p1+p2)/p3
 ```
 
+Barratt questionnaire also breaks down the composite/total score into sub-components. Specific questions are categorized into one of these components:
+
+- **Attention:** attention and cognitive instability
+
+- **Motor:** motor and perseverance
+
+- **Non-Planning:** self-control and cognitive complexity
+
+
+```{r}
+#Average barratt scores 
+data_sub_barratt <- data_sub %>% 
+  select(sex, reproductive_status, barratt_attention:barratt_total) %>% 
+  pivot_longer(cols = c("barratt_attention",
+                        "barratt_motor",
+                        "barratt_non_planning",
+                        "barratt_total"),
+               names_to = "barratt_type",
+               values_to = "score") %>% 
+  mutate(barratt_type = recode(barratt_type,
+                               barratt_attention = "Attention",
+                               barratt_motor = "Motor",
+                               barratt_non_planning = "Non-Planning",
+                               barratt_total = "Total"))
+
+#Mean by sex
+data_sub_barratt_mean <- data_sub_barratt %>% 
+  group_by(sex, barratt_type) %>% 
+  mutate(mean_score = mean(score))
+
+
+#Mean by repo status
+data_sub_barratt_mean_repo <- data_sub_barratt_mean %>% 
+  filter(reproductive_status != "Men") %>% 
+  mutate(reproductive_status = fct_relevel(reproductive_status, 
+                                         c("Pre", "Peri", "Post"))) %>% 
+  group_by(reproductive_status, barratt_type) %>% 
+  mutate(mean_score = mean(score))
+```
+
+
+```{r barratt-types}
+#Reproductive status
+p1 <- ggplot(data = data_sub_barratt_mean_repo, aes(y = mean_score,
+                                              x = reproductive_status,
+                                              group = barratt_type)) + 
+  geom_line(aes(color = barratt_type), size = 0.8,
+            show.legend = FALSE) +
+  geom_point(aes(color = barratt_type), size = 2,
+             show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Barratt Score",
+       title = "Reproductive Status") 
+
+
+#Sex
+#Repoductive status
+p2 <- ggplot(data = data_sub_barratt_mean, aes(y = mean_score,
+                                         x = sex,
+                                         group = barratt_type)) + 
+  geom_line(aes(color = barratt_type), size = 0.8) +
+  geom_point(aes(color = barratt_type), size = 2) +
+  labs(x = "Sex",
+       y = "Barratt Score",
+       title = "Sex") 
+
+
+#Total
+p3 <- ggplot(data = data_sub_barratt, 
+       aes(x = score,
+           fill = barratt_type,
+           color = barratt_type)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Barratt Score",
+       y = "Count",
+       title = "Total")
+
+
+#Combine
+(p1+p2)/p3
+```
+
 
 ## Medical Outcomes
+
+General health index of participants. Scores are the weighted sums of the questions in each section
+
+- Lower scores = more disability
+
+- Higher scores = less disability 
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = medical_outcomes,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Medical Outcome",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = medical_outcomes,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Medical Outcome",
+       title = "Sex") + 
+  theme(legend.position = "none")
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = medical_outcomes)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Medical Outcome",
+       y = "Count",
+       title = "Total")
+
+#Combine
+(p1+p2)/p3
+```
 
 ## BAS Total
 
 ## BIS Total
 
 ## Perceived Stress
+
+
 
 ## SSS Community Ladder
 
