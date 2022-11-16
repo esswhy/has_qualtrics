@@ -29,7 +29,7 @@ library(ggpubr)
 ########## ALL
 data_all <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
   clean_names() %>% 
-  select(subject_id, sex, reproductive_status, age_scan_years,
+  select(subject_id, scan_date, sex, reproductive_status, age_scan_years,
         bmi, self_ses, education_years, verbal_iq,
         
         #Women's basic repro health
@@ -58,8 +58,10 @@ data_all_repo <- data_all %>%
 data <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
   clean_names() %>% 
   filter(completed_scan == "Yes") %>% 
-  filter(!subject_id %in% c("309", #bad participant
-                            "316", #vertigo/took Wellbutrin for mood and Lipitor for cholesterol 7 days/week of scan
+  filter(!subject_id %in% c(
+    
+    #"309", #bad participant
+    #"316", #vertigo/took Wellbutrin for mood and Lipitor for cholesterol 7 days/week of scan
                             "329", #on prednisone 7 days/week of scan
                             "352", #current MDD/depression
                             "372" #past neuroschistosomiasis at 24 years old
@@ -106,6 +108,7 @@ data_sub_repo <- data_sub_repo %>%
 Data of the *cleaned* sample of Healthy Aging Participants, meaning that these are participants that we have decided to include based on complete fMRI scans, no major health problems from demographic survey, and from previous team discussions of who to exclude as we wrapped up recruitment for the study.
 
 Subjects ranged from 301-437, scanned over the course of March 1, 2017 to February 10, 2022.
+
 
 ```{r table-demo-all}
 #Repo status
