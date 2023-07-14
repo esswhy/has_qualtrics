@@ -1,7 +1,7 @@
 ---
 title: 'Subject 1001B: Demographics'
 author: "Shuying Yu"
-date: "6/21/2022"
+date: "7/13/2022"
 output: 
   html_document:
     toc: true
@@ -36,13 +36,13 @@ data_all <- read_csv(here("data", "HAS_demo_all.csv")) %>%
 ########## CLEAN
 
 #Read data and clean variable names
-data <- read_csv(here("data", "HAS_demo_clean.csv")) %>% 
+data <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
   clean_names()
 
 #Select certain columns just for review
 data_sub <- data %>% 
   select(subject_id, sex, reproductive_status, age_scan_years,
-        bmi, self_ses, education_years, verbal_iq,
+        bmi, self_ses, education_years, verbal_iq, straw_10_stages,
         
         #Women's basic repro health
         age_at_menarche_years, time_since_last_cycle_years,
@@ -69,10 +69,9 @@ Data of the *cleaned* sample of Healthy Aging Participants, meaning that these a
 
 Subjects ranged from 301-437, scanned over the course of March 1, 2017 to February 10, 2022.
 
-Black diamond point are the group means. Highlighted in purple triangle point and purple line is subject 438.
+Black diamond point are the group means. Highlighted in purple triangle point and purple line is subject 1001B.
 
-
-Please refer to hand out for means and standard deviations of the basic demographic and neurpsychological batteries. Figures will only include basic demographic and neurpsychiatric batteries.
+Figures will only include basic demographic and neurpsychiatric batteries. Given little overlap between the type of neuropsychiatric assessments between the HAS sample and subject 1001B, more data pulled from the Reproductive Heath Questionnaire from the demographic survey will be included in this report.
 
 
 
@@ -114,8 +113,8 @@ p1 <- ggplot(data = data_sub_repo, aes(y = age_scan_years,
        y = "Age (years)",
        title = "Age") +
   
-  #Add 438
-  geom_point(aes(x = factor("Post"), y=64),
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=57),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -133,8 +132,8 @@ p2 <- ggplot(data = data_sub_repo, aes(y = bmi,
        y = "BMI",
        title = "BMI") +
   
-  #Add 438
-  geom_point(aes(x = factor("Post"), y=20.4),
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=21.45),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -152,8 +151,8 @@ p3 <- ggplot(data = data_sub_repo, aes(y = education_years,
        y = "Education (years)",
        title = "Education") +
   
-  #Add 438
-  geom_point(aes(x = factor("Post"), y=18),
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=14),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -182,7 +181,7 @@ Suject 438:
 
 - Education: Master's degree (18 years of education)
 
-Subject 438 did not do AMNART for Verbal IQ.
+Subject 1001B did not do AMNART for Verbal IQ.
 
 ## Sex
 
@@ -199,8 +198,8 @@ p1 <- ggplot(data = data_sub, aes(y = age_scan_years,
   labs(x = "Sex",
        y = "Age (years)",
        title = "Age") +
-    #Add 438
-  geom_point(aes(x = factor("Female"), y=64),
+    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=57),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -217,8 +216,8 @@ p2 <- ggplot(data = data_sub, aes(y = bmi,
   labs(x = "Sex",
        y = "BMI",
        title = "BMI") +
-    #Add 438
-  geom_point(aes(x = factor("Female"), y=20.4),
+    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=21.45),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -235,8 +234,8 @@ p3 <- ggplot(data = data_sub, aes(y = education_years,
   labs(x = "Sex",
        y = "Education (years)",
        title = "Education") +
-    #Add 438
-  geom_point(aes(x = factor("Female"), y=18),
+    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=14),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -269,8 +268,8 @@ p1 <- ggplot(data = data_sub, aes(x = age_scan_years)) +
   labs(x = "Age (years)",
        y = "Count",
        title = "Age") +
-  #Add 438 
-  geom_vline(aes(xintercept = 64), color = "purple", size = 1.5)
+  #Add 1001b
+  geom_vline(aes(xintercept = 57), color = "purple", size = 1.5)
 
 
 #BMI
@@ -280,8 +279,8 @@ p2 <- ggplot(data = data_sub, aes(x = bmi)) +
   labs(x = "BMI",
        y = "Count",
        title = "BMI") +
-  #Add 438 
-  geom_vline(aes(xintercept = 20.4), color = "purple", size = 1.5)
+  #Add 1001b
+  geom_vline(aes(xintercept = 21.45), color = "purple", size = 1.5)
 
 
 #Education
@@ -291,8 +290,8 @@ p3 <- ggplot(data = data_sub, aes(x = education_years)) +
   labs(x = "Education (years)",
        y = "Count",
        title = "Education") +
-  #Add 438 
-  geom_vline(aes(xintercept = 18), color = "purple", size = 1.5)
+  #Add 1001b
+  geom_vline(aes(xintercept = 14), color = "purple", size = 1.5)
 
 
 #Verbal IQ
@@ -312,6 +311,123 @@ p4 <- ggplot(data = data_sub, aes(x = verbal_iq)) +
 
 <br>
 
+
+# Reproductive Health Characteristics {.tabset}
+
+ 
+Women only. Includes only age at menarche (years) and time since last menstrual cycle (years).
+
+
+```{r table-age-straw10-clean}
+tab_age_straw <- data_sub_repo %>% group_by(reproductive_status,
+                                            straw_10_stages) %>% 
+  
+    drop_na() %>% 
+    summarise(count = n(),
+            mean_age = mean(age_scan_years),
+            sd_age = sd(age_scan_years),
+            min_age = min(age_scan_years),
+            max_age = max(age_scan_years))
+
+tab_age_straw %>% 
+  kable(col.names = c("Reproductive Status", "Straw-10 Stages",
+                      "Count", "Mean Age (years)", 
+                      "Standard Deviation of Age (years)",
+                      "Minimum Age (years)", "Maximum Age (years)"),
+        
+        #Add caption
+        caption = "Age characteristics of clean HAS sample of women, by reproductive stages.",
+        
+        #Align all cells/columns to center
+        align = c(rep("c", times = 7)),
+        
+        #Round digits to 2
+        digits = 2) %>%
+  
+  #Make full width and add hover to rows
+  kable_styling(full_width = TRUE,
+                position = "center",
+                bootstrap_options = "hover")
+```
+
+
+## Reproductive Status
+
+```{r}
+#Age at menarche
+p1 <- ggplot(data = data_sub_repo, aes(y = age_at_menarche_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Age (years)",
+       title = "Age at Menarche") +
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=15),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Time since last cycle 
+p2 <- ggplot(data = data_sub_repo, aes(y = time_since_last_cycle_years,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Time (years)",
+       title = "Time Since Last Menstrual Cycle")+
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=2),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Combine
+(p1+p2)
+```
+
+
+## Total
+
+```{r}
+#Age at menarche
+p1 <- ggplot(data = data_sub, aes(x = age_at_menarche_years)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Age (years)",
+       y = "Count",
+       title = "Age at Menarche")+
+  #Add 1001b
+  geom_vline(aes(xintercept = 15), color = "purple", size = 1.5)
+
+
+#Time since last cycle 
+p2 <- ggplot(data = data_sub, aes(x = time_since_last_cycle_years)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Time (years)",
+       y = "Count",
+       title = "Time Since Last Menstrual Cycle")+
+  #Add 1001b
+  geom_vline(aes(xintercept = 2), color = "purple", size = 1.5)
+
+
+#Combine
+(p1+p2)
+```
+
+
+#  {-}
+
+<br>
 
 # Neuropsychiatric Assessments {.tabset}
 
@@ -344,7 +460,7 @@ p1 <- ggplot(data = data_sub_repo, aes(y = edinburgh_handedness,
        y = "Handedness",
        title = "Reproductive Status") + 
   theme(legend.position = "none") +
-   #Add 438
+   #Add 1001b
   geom_point(aes(x = factor("Post"), y=1),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
@@ -363,7 +479,7 @@ p2 <- ggplot(data = data_sub, aes(y = edinburgh_handedness,
        y = "Handedness",
        title = "Sex") + 
   theme(legend.position = "none") +
-      #Add 438
+      #Add 1001b
   geom_point(aes(x = factor("Female"), y=1),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
@@ -377,524 +493,14 @@ p3 <- ggplot(data = data_sub, aes(x = edinburgh_handedness)) +
   labs(x = "Handedness",
        y = "Count",
        title = "Total") +
-  #Add 438 
+  #Add 1001b
   geom_vline(aes(xintercept = 1), color = "purple", size = 1.5)
 
 #Combine
 (p1+p2)/p3
 ```
-Subject 438: score of 1.0 (pure right hander)
 
-
-## Epworth Sleepiness
-
-Measures whether participant is abnormally sleepy
-
--	Score of 0-7 = Unlikely to be abnormally sleepy
-
--	Score of 8-9 = Average amount of daytime sleepiness
-
--	Score of 10-15 = May be excessively sleepy depending on situation 
-
--	Score of 16-24 = Excessively sleepy 
-
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = epworth_sleepiness,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Sleepiness",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=14),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = epworth_sleepiness,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Sleepiness",
-       title = "Sex") + 
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=14),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = epworth_sleepiness)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Sleepiness",
-       y = "Count",
-       title = "Total") +
-  #Add 438 
-  geom_vline(aes(xintercept = 14), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-
-Subject 438: score of 14
-
-
-## Barratt
-
-Measures personality and behavior impulsivity. Higher scores indicate more impulsivity.
-
-**Overall/Total**
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = barratt_total,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Barratt Total",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=61),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = barratt_total,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Barratt Total",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=61),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = barratt_total)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Barratt Total",
-       y = "Count",
-       title = "Total") +
-    #Add 438 
-  geom_vline(aes(xintercept = 61), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-
-Subject 438: score of 61
-
-
-## Medical Outcomes
-
-General health index of participants. Scores are the weighted sums of the questions in each section
-
-- Lower scores = more disability
-
-- Higher scores = less disability 
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = medical_outcomes,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Medical Outcomes",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=104),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = medical_outcomes,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Medical Outcomes",
-       title = "Sex") + 
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=104),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = medical_outcomes)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Medical Outcomes",
-       y = "Count",
-       title = "Total") +
-    #Add 438 
-  geom_vline(aes(xintercept = 104), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-
-Subject 438: score of 104
-
-## BAS & BIS 
-
-
-**Behavioral Avoidance Scale (BAS) Total** measures motivation to approach goal-oriented outcomes. 
-
-Total is the composite score for BAS, which is the sum of scores from the three subscales
-
-- Higher scores = higher motivation for goal-oriented outcomes
-
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = bas_total,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "BAS Total",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=24),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = bas_total,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "BAS Total",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=24),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = bas_total)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "BAS Total",
-       y = "Count",
-       title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 24), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-Subject 438: score of 24
-
-
-**Behavioral Inhibition Scale (BIS) Total** measures motivation to avoid aversive outcomes
-
-- Higher scores = higher motivation for goal-oriented outcomes
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = bis_total,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "BIS Total",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=15),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = bis_total,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "BIS Total",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=15),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = bis_total)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "BIS Total",
-       y = "Count",
-       title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 15), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-
-Subject 438: score of 15
-
-
-## Perceived Stress
-
-Measures participant's perceived stress. There is a potential relationship with perceived stress and health; Cohen et al. (1988) show correlations with PSS and: Stress Measures, Self-Reported Health and Health Services Measures, Health Behavior Measures, Smoking Status, Help Seeking Behavior.
-
-- Higher scores = more perceived stress
-
-
-```{r fig.align="center", fig.cap="L. Harris Poll gathered information on 2,387 respondents in the U.S. for normative data (from Sheldon Cohen, 1994)"}
-knitr::include_graphics("pss_norm_table_1994.png")
-```
-
-
-<br>
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = perceived_stress,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Perceived Stress",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=11),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = perceived_stress,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Perceived Stress",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=11),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = perceived_stress)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Perceived Stress",
-       y = "Count",
-       title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 11), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-Subject 438: score of 11
-
-## SSS Community Ladder
-
-Measures the participant’s perceived social standing within their community. Scores range from 1-10.
-
-- Higher scores = more perceived social standing
-
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = sss_community_ladder,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Social Standing",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=7),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = sss_community_ladder,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Social Standing",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=7),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = sss_community_ladder)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Social Standing",
-       y = "Count",
-       title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 7), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-
-Subject 438: score of 7
-
-## SSS US Ladder
-
-Measures the participant’s perceived social standing within the United States. Scores range from 1-10.
-
-- Higher scores = more perceived social standing
-
-
-```{r}
-#Reproductive status
-p1 <- ggplot(data = data_sub_repo, aes(y = sss_us_ladder,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Social Standing",
-       title = "Reproductive Status") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=9),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Sex
-p2 <- ggplot(data = data_sub, aes(y = sss_us_ladder,
-                                 x = sex,
-                                 fill = sex,
-                                 color = sex)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Sex",
-       y = "Social Standing",
-       title = "Sex") + 
-  theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=9),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Total
-p3 <- ggplot(data = data_sub, aes(x = sss_us_ladder)) + 
-  geom_histogram(alpha = 0.5, position = "identity",
-                 show.legend = FALSE) +
-  labs(x = "Social Standing",
-       y = "Count",
-       title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 9), color = "purple", size = 1.5)
-
-#Combine
-(p1+p2)/p3
-```
-Subject 438: score of 9
+Subject 1001B: score of 1.0 (pure right hander)
 
 
 ## Geriatric Depression
@@ -919,8 +525,8 @@ p1 <- ggplot(data = data_sub_repo, aes(y = geriatric_depression,
        y = "Geriatric Depression",
        title = "Reproductive Status") + 
   theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=1),
+   #Add 1001b
+  geom_point(aes(x = factor("Post"), y=5),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -938,8 +544,8 @@ p2 <- ggplot(data = data_sub, aes(y = geriatric_depression,
        y = "Geriatric Depression",
        title = "Sex") + 
   theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=1),
+   #Add 1001b
+  geom_point(aes(x = factor("Female"), y=5),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -951,18 +557,19 @@ p3 <- ggplot(data = data_sub, aes(x = geriatric_depression)) +
   labs(x = "Geriatric Depression",
        y = "Count",
        title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 1), color = "purple", size = 1.5)
+    #Add 1001b
+  geom_vline(aes(xintercept = 5), color = "purple", size = 1.5)
 
 #Combine
 (p1+p2)/p3
 ```
 
 
-Subject 438: score of 1
+Subject 1001B: score of 5
 
 
-Scale was developed by Sheikh & Yesavage, 1986. Times are a lot different now and there is lots to be sad about (i.e., general depression is normalized)
+Scale was developed by Sheikh & Yesavage, 1986.
+
 
 
 ## PSQI
@@ -992,8 +599,8 @@ p1 <- ggplot(data = data_sub_repo, aes(y = psqi,
        y = "PSQI Score",
        title = "Reproductive Status") + 
   theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=5),
+   #Add 1001b
+  geom_point(aes(x = factor("Post"), y=3),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -1011,8 +618,8 @@ p2 <- ggplot(data = data_sub, aes(y = psqi,
        y = "PSQI Score",
        title = "Sex") + 
   theme(legend.position = "none")+
-   #Add 438
-  geom_point(aes(x = factor("Female"), y=5),
+   #Add 1001b
+  geom_point(aes(x = factor("Female"), y=3),
              color = "purple", shape = 17, size = 3,
              show.legend = FALSE)
 
@@ -1024,421 +631,286 @@ p3 <- ggplot(data = data_sub, aes(x = psqi)) +
   labs(x = "PSQI Score",
        y = "Count",
        title = "Total")+
-    #Add 438 
-  geom_vline(aes(xintercept = 5), color = "purple", size = 1.5)
+    #Add 1001b
+  geom_vline(aes(xintercept = 3), color = "purple", size = 1.5)
 
 #Combine
 (p1+p2)/p3
 ```
-Subject 438: score of 5
+
+Subject 1001b: score of 3
+
+
+
+## STAI
+
+State-Trait Inventory for Adults (STAI) measures participant’s anxiety
+
+**STATE:** current level of anxiety
+
+
+```{r stai-state}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = stai_state,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Current Anxiety Level",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none") +
+     #Add 1001b
+  geom_point(aes(x = factor("Post"), y=20),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = stai_state,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Current Anxiety Level",
+       title = "Sex") + 
+  theme(legend.position = "none")+
+     #Add 1001b
+  geom_point(aes(x = factor("Female"), y=20),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = stai_state)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Current Anxiety Level",
+       y = "Count",
+       title = "Total")+
+    #Add 1001b
+  geom_vline(aes(xintercept = 20), color = "purple", size = 1.5)
+
+#Combine
+(p1+p2)/p3
+```
+
+
+Subject 1001B: score of 20 (for state only)
+
+
+
+# {-}
+
+<br>
+
+# {-}
+
+# Face Name Memory {.tabset}
+
+
+## Name Learning and Retrieval
+
+Name Learning & Retrieving Composite of:
+
+- Initial recall of names (1st and 2nd rounds)
+
+- Cued recall of names after 2 trials
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_nt,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Names Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none") +
+     #Add 1001b
+  geom_point(aes(x = factor("Post"), y=13),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_nt,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Names Total",
+       title = "Sex") + 
+  theme(legend.position = "none") +    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=13),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_nt)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Names Total",
+       y = "Count",
+       title = "Total")+
+    #Add 1001b
+  geom_vline(aes(xintercept = 13), color = "purple", size = 1.5)
+
+#Combine
+(p1+p2)/p3
+```
+
+
+Subject 1001B: score of 13
+
+## Occupation Learning and Retrieval
+
+Occupation Learning & Retrieving Composite
+
+- Initial recall of occupations (1st and 2nd rounds)
+
+- Cued recall of occupations after 2 trials
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_ot,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Occupation Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")+
+     #Add 1001b
+  geom_point(aes(x = factor("Post"), y=24),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_ot,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Occupation Total",
+       title = "Sex") + 
+  theme(legend.position = "none")+    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=24),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_ot)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Occupation Total",
+       y = "Count",
+       title = "Total")+
+    #Add 1001b
+  geom_vline(aes(xintercept = 24), color = "purple", size = 1.5)
+
+#Combine
+(p1+p2)/p3
+```
+
+
+Subject 1001B: score of 24
+
+## Composite Name and Occupation
+
+Composite of Name and Occupation Learning and Recall (Total)
+
+Sum of FNAME-NT and FNAME OT
+
+
+```{r}
+#Reproductive status
+p1 <- ggplot(data = data_sub_repo, aes(y = fname_t,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Reproductive Status",
+       y = "Face Name Total",
+       title = "Reproductive Status") + 
+  theme(legend.position = "none")+
+     #Add 1001b
+  geom_point(aes(x = factor("Post"), y=37),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+
+#Sex
+p2 <- ggplot(data = data_sub, aes(y = fname_t,
+                                 x = sex,
+                                 fill = sex,
+                                 color = sex)) + 
+  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
+  geom_jitter(width = 0.1, show.legend = FALSE) +
+  stat_summary(fun.y=mean, geom="point",
+               shape=20, size=3, color="black", fill="black") +
+  labs(x = "Sex",
+       y = "Face Name Total",
+       title = "Sex") + 
+  theme(legend.position = "none")+    #Add 1001b
+  geom_point(aes(x = factor("Female"), y=37),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Total
+p3 <- ggplot(data = data_sub, aes(x = fname_t)) + 
+  geom_histogram(alpha = 0.5, position = "identity",
+                 show.legend = FALSE) +
+  labs(x = "Face Name Total",
+       y = "Count",
+       title = "Total")+
+    #Add 1001b
+  geom_vline(aes(xintercept = 37), color = "purple", size = 1.5)
+
+#Combine
+(p1+p2)/p3
+```
+
+
+Subject 1001B: score of 37
 
 # {-}
 
 
-# Hormones {.tabset}
-
-
-```{r}
-#Read in the data
-hormones_df <- read_csv(here("data", "HAS_SNAG_mastersheet_tidy.csv")) %>% 
-  clean_names() %>% 
-  select(subject_id, sex, repo_status_scan,
-         estradiol_scan_pg_ml:testosterone_scan_ng_dl)
-
-#Subset women
-df_women <- hormones_df %>% 
-
-  #Filter if female
-  filter(sex == "Female") %>% 
-  
-  #Reorder repo status
-  mutate(repo_status_scan = fct_relevel(repo_status_scan, 
-                                         c("Pre", "Peri", "Post")))
-```
-
-## Estradiol
-
-```{r}
-#Estradiol plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = estradiol_scan_pg_ml, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Estradiol (pg/mL)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=308),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE) 
-```
-
-
-```{r}
-#Estradiol plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = estradiol_scan_pg_ml, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = expression(atop(paste(bold("17"),
-                                 bold(beta),
-                                 bold("-Estradiol (pg/mL)")),
-                           )),
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=308),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-Subject 438: estradiol level of 308 pg/mL
-
-Subject mentioned taking a form of HRT
-
-
-## Progesterone
-
-```{r}
-#Progesterone plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = progesterone_scan_ng_ml, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Progesterone (ng/mL)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=1.94),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-```{r}
-#Progesterone plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = progesterone_scan_ng_ml, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = "Progesterone (ng/mL)",
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=1.94),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-Subject 438: progesterone level of 1.94 ng/mL
-
-## FSH
-
-```{r}
-#FSH plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = fsh_scan_miu_ml, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Follicle Stimulating Hormone (mIU/mL)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=91.5),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-```{r}
-#FSH plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = fsh_scan_miu_ml, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = "Follicle Stimulating Hormone (mIU/mL)",
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=91.5),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-
-
-Subject 438: FSH level of 91.5 mIU/mL
-
-## SHBG
-
-```{r}
-#SHBG plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = shbg_scan_nmol_l, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "SHBG (nmol/L)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=74.26),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-```{r}
-#SHBG plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = shbg_scan_nmol_l, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = "SHBG (nmol/L)",
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=74.26),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-Subject 438: SHBG level of 74.26 nmol/L
-
-## DHEAS
-
-```{r}
-#DHEAS plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = dheas_scan_ug_dl, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "DHEAS (ug/dL)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=39.5),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-
-```{r}
-#DHEAS plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = dheas_scan_ug_dl, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = "DHEAS (ug/dL)",
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=39.5),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-Subject 438: DHEAS level of 39.5 ug/dL
-
-## Testosterone
-
-```{r}
-#Testosterone plot with individual data points
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = testosterone_scan_ng_dl, 
-                            fill = repo_status_scan,
-                            color = repo_status_scan)) + 
-  geom_boxplot(alpha = 0.5,show.legend = FALSE) +
-  geom_jitter(width = 0.1, show.legend = FALSE) +
-  stat_summary(fun.y=mean, geom="point",
-               shape=20, size=3, color="black", fill="black") +
-  labs(x = "Reproductive Status",
-       y = "Testosterone (ng/dL)",
-       title = "Boxplot") + 
-  theme_classic() +
-  theme(legend.position = "none") +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=32.4),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-
-```{r}
-#Testosterone plot bar plot with SEM
-ggplot(data = df_women, aes(x = repo_status_scan, 
-                            y = testosterone_scan_ng_dl, 
-                            fill = repo_status_scan))+
-  
-  #Define bar plot by mean
-  geom_bar(stat="summary", fun= "mean",
-           show.legend = FALSE)+ 
-  
-  #Add SEM errorbar
-  stat_summary(geom = "errorbar", 
-               fun.data = mean_se,
-               width = 0.15, size = 0.7)+
-  
-  #Change labels
-  labs(x = "Reproductive Status",
-       y = "Testosterone (ng/dL)",
-       title = "Barplot of mean with SEM") +
-  
-  #Change colors of bars
-  #Reverse color scale
-  scale_fill_brewer(palette = "RdPu",
-                    direction = -1)+
-  
-  #Change theme
-  theme_classic() +
-  
-  #Customize theme
-  theme(axis.title = element_text(size = 11, face = "bold"), 
-        axis.text = element_text(size= 10)) +
-   #Add 438
-  geom_point(aes(x = factor("Post"), y=32.4),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-```
-
-Subject 438: testosterone level of 32.4 ng/dL
-
-# {-}
 
 
 
