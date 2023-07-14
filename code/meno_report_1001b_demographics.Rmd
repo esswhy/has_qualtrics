@@ -29,7 +29,8 @@ library(RColorBrewer)
 
 ########## ALL
 data_all <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
-  clean_names()
+  clean_names() %>% 
+  filter(!subject_id %in% c("1001B"))
 
 
 
@@ -37,7 +38,8 @@ data_all <- read_csv(here("data", "HAS_demo_all.csv")) %>%
 
 #Read data and clean variable names
 data <- read_csv(here("data", "HAS_demo_all.csv")) %>% 
-  clean_names()
+  clean_names() %>% 
+  filter(!subject_id %in% c("1001B"))
 
 #Select certain columns just for review
 data_sub <- data %>% 
@@ -174,13 +176,15 @@ p4 <- ggplot(data = data_sub_repo, aes(y = verbal_iq,
 #Combine
 (p1+p2)/(p3+p4)
 ```
-Suject 438:
+
+
+Suject 1001B:
 
 - Age: 64 years old
 
-- BMI: 20.4
+- BMI: 21.45
 
-- Education: Master's degree (18 years of education)
+- Education: Associate's degree (14 years of education)
 
 Subject 1001B did not do AMNART for Verbal IQ.
 
@@ -352,9 +356,10 @@ tab_age_straw %>%
 ```
 
 
-## Reproductive Status
+## Menarche and Menopause
 
 ```{r}
+#### Reproductive Status
 #Age at menarche
 p1 <- ggplot(data = data_sub_repo, aes(y = age_at_menarche_years,
                                  x = reproductive_status,
@@ -391,46 +396,10 @@ p2 <- ggplot(data = data_sub_repo, aes(y = time_since_last_cycle_years,
              show.legend = FALSE)
 
 
-#Combine
-(p1+p2)
-```
 
-
-```{r}
-###Menopause symptoms
-
-
-#Night sweats
-ggplot(data = data_sub_repo, aes(y = night_sweats,
-                                 x = reproductive_status,
-                                 fill = reproductive_status,
-                                 color = reproductive_status)) + 
-  geom_histogram(alpha = 0.5, show.legend = FALSE) +
-  labs(x = "Reproductive Status",
-       y = "Frequency",
-       title = "Night Sweats") +
-  #Add 1001b
-  geom_point(aes(x = factor("Post"), y=15),
-             color = "purple", shape = 17, size = 3,
-             show.legend = FALSE)
-
-
-#Vaginal dryness
-
-
-#Irritability
-
-
-#Hot flashes
-```
-
-
-
-## Total
-
-```{r}
+##### Total
 #Age at menarche
-p1 <- ggplot(data = data_sub, aes(x = age_at_menarche_years)) + 
+p3 <- ggplot(data = data_sub, aes(x = age_at_menarche_years)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "Age (years)",
@@ -441,7 +410,7 @@ p1 <- ggplot(data = data_sub, aes(x = age_at_menarche_years)) +
 
 
 #Time since last cycle 
-p2 <- ggplot(data = data_sub, aes(x = time_since_last_cycle_years)) + 
+p4 <- ggplot(data = data_sub, aes(x = time_since_last_cycle_years)) + 
   geom_histogram(alpha = 0.5, position = "identity",
                  show.legend = FALSE) +
   labs(x = "Time (years)",
@@ -453,7 +422,97 @@ p2 <- ggplot(data = data_sub, aes(x = time_since_last_cycle_years)) +
 
 #Combine
 (p1+p2)
+
+
+#Combine
+(p3+p4)
 ```
+
+
+Subject 1001B:
+
+- Age at menarche = 15 years old
+
+- Time since last menstrual cycle = 2 years
+
+## Menopause Symptoms
+
+```{r}
+###Menopause symptoms
+
+#Replace NA for women with Not at all
+data_sub_repo <- data_sub_repo %>% 
+  replace_na(list(night_sweats = "Not at all", 
+                  vaginal_dryness = "Not at all",
+                  irritability = "Not at all",
+                  hot_flash = "Not at all"))
+
+
+#Night sweats
+p1 <- ggplot(data = data_sub_repo, aes(x = reproductive_status,
+                                 fill = night_sweats)) + 
+  geom_bar(position = position_dodge(), show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Frequency",
+       fill = "Occurence",
+       title = "Night Sweats") +
+  geom_point(aes(x = 2.67, y=6),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Vaginal dryness
+p2 <- ggplot(data = data_sub_repo, aes(x = reproductive_status,
+                                 fill = vaginal_dryness)) + 
+  geom_bar(position = position_dodge()) +
+  labs(x = "Reproductive Status",
+       y = "Frequency",
+       fill = "Occurence",
+       title = "Vaginal Dryness") +
+  geom_point(aes(x = 3.33, y=18),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Irritability
+p3 <- ggplot(data = data_sub_repo, aes(x = reproductive_status,
+                                 fill = irritability)) + 
+  geom_bar(position = position_dodge(),show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Frequency",
+       fill = "Occurence",
+       title = "Irritability") +
+  geom_point(aes(x = 2.64, y=12),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Hot flashes
+p4 <- ggplot(data = data_sub_repo, aes(x = reproductive_status,
+                                 fill = hot_flash)) + 
+  geom_bar(position = position_dodge()) +
+  labs(x = "Reproductive Status",
+       y = "Frequency",
+       fill = "Occurence",
+       title = "Hot Flashes") +
+  geom_point(aes(x = 2.77, y=4),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+#Combine
+(p1+p2)
+(p3+p4)
+```
+
+Subject 1001B: 
+
+- Night sweats (1-5 days)
+
+- Vaginal dryness (Not at all)
+
+- Irritability (1-5 days)
+
+- Hot flashes (6-8 days)
 
 
 #  {-}
