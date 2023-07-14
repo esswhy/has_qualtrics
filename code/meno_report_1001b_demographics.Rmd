@@ -47,6 +47,7 @@ data_sub <- data %>%
         #Women's basic repro health
         age_at_menarche_years, time_since_last_cycle_years,
         menopausal_status,
+        night_sweats, vaginal_dryness, irritability, hot_flash,
         
         #TH and IP qualtrics
         edinburgh_handedness:ltpa_total,
@@ -393,6 +394,36 @@ p2 <- ggplot(data = data_sub_repo, aes(y = time_since_last_cycle_years,
 #Combine
 (p1+p2)
 ```
+
+
+```{r}
+###Menopause symptoms
+
+
+#Night sweats
+ggplot(data = data_sub_repo, aes(y = night_sweats,
+                                 x = reproductive_status,
+                                 fill = reproductive_status,
+                                 color = reproductive_status)) + 
+  geom_histogram(alpha = 0.5, show.legend = FALSE) +
+  labs(x = "Reproductive Status",
+       y = "Frequency",
+       title = "Night Sweats") +
+  #Add 1001b
+  geom_point(aes(x = factor("Post"), y=15),
+             color = "purple", shape = 17, size = 3,
+             show.legend = FALSE)
+
+
+#Vaginal dryness
+
+
+#Irritability
+
+
+#Hot flashes
+```
+
 
 
 ## Total
